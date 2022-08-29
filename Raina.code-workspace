@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cSpell.enableFiletypes": [
+			"!typescript"
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.vscode-typescript-next"
+		]
+	}
+}
