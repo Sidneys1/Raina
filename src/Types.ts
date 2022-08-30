@@ -1,8 +1,8 @@
-export type Point = [number, number];
+export type Point = [x: number, y: number];
 
-export type Line = [Point, Point];
+export type Line = [start: Point, end: Point];
 
-export type Rectangle = [number, number, number, number];
+export type Rectangle = [x: number, y: number, w: number, h: number];
 
 export abstract class PointMath {
     public static dot(left: Point, right: Point): number {
@@ -13,6 +13,9 @@ export abstract class PointMath {
     }
     public static sub(left: Point, right: Point): Point {
         return [left[0] - right[0], left[1] - right[1]];
+    }
+    public static add(left: Point, right: Point): Point {
+        return [left[0] + right[0], left[1] + right[1]];
     }
     public static mul(left: Point, right: number): Point {
         return [left[0] * right, left[1] * right];

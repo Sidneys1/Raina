@@ -12,50 +12,27 @@ export class DebugModule extends DrawableGameModule {
     private totalFrames: number = 0;
     private elapsedTime: number = 0;
     private textHeight: number;
+
+    public Extras: (() => string)[] = [];
     
+    public static S?: DebugModule;
+
     constructor(game: IGame) {
-        super(true, -9999, -9999);
+        super(false, -9999, -9999);
 
         this._game = game;
 
         this.textHeight = 10 + Renderer.MeasureText(DEBUG_FONT, "0").actualBoundingBoxAscent;
+
+        DebugModule.S = this;
     }
 
     Draw(_: number): void {
         this.totalFrames++;
 
         const ctx = Renderer.Ctx;
-        ctx.save();
-        ctx.setLineDash([5, 5])
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = '#ccc';
-        ctx.beginPath();
-
-        for (let x = 12; x < 1280;) {
-            ctx.moveTo(x, -25);
-            ctx.lineTo(x, 745);
-            x += 25;
-            ctx.moveTo(x, 745);
-            ctx.lineTo(x, -25);
-            x += 25;
-        }
-
-        for (let y = 12; y < 720;) {
-            ctx.moveTo(-25, y);
-            ctx.lineTo(1305, y);
-            y += 25;
-            ctx.moveTo(1305, y);
-            ctx.lineTo(-25, y);
-            y += 25;
-        }
-        
-        ctx.closePath();
-        ctx.stroke();
-        ctx.restore()
-
-        // let player: Player|undefined = undefined;
         for (const entity of this._game.State?.Entities ?? []) {
-            Renderer.FillCircle('red', entity.Pos[0], entity.Pos[1], 5);
+            Renderer.FillCircle('red', entity.Pos[0], entity.Pos[1], 3);
         }
 
         Renderer.DrawText("black", DEBUG_FONT, 10, this.textHeight, `${this.Fps} fps`);
@@ -66,6 +43,11 @@ export class DebugModule extends DrawableGameModule {
 
         const mouse = InputManager.S.MousePos();
         Renderer.DrawText("black", DEBUG_FONT, 10, this.textHeight * 4, `Mouse: ${mouse[0]},${mouse[1]} (${(mouse[0] / 25).toFixed(2)},${(mouse[1] / 25).toFixed(2)}) ` + InputManager.S.MouseButtons().join(', '));
+
+        for (let i = 0; i < this.Extras.length; i++) {
+            const extra = this.Extras[i];
+            Renderer.DrawText("black", DEBUG_FONT, 10, this.textHeight * (5 + i), extra());
+        }
 
         // if (player !== undefined)
         //     Renderer.DrawText("black", DEBUG_FONT, 10, this.textHeight * 5, `Player: ${(player.Pos[0] / 25).toFixed(2)},${(player.Pos[1] / 25).toFixed(2)}`);

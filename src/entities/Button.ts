@@ -11,7 +11,14 @@ type ButtonStyle = {
 };
 
 export class Button extends Entity {
-    public Font = BUTTON_FONT;
+    private _font = BUTTON_FONT;
+    public get Font() {
+        return this._font;
+    }
+    public set Font(value) {
+        this._font = value;
+        this.textMetrics = Renderer.MeasureText(this._font, this.text)
+    }
 
     public Style: ButtonStyle = {
         Background: 'white',

@@ -1,10 +1,10 @@
 import { IDrawable, IGameCommon, IUpdatable } from "./Interfaces.js";
 import { DrawableGameModule, GameModule } from "./GameModule.js";
+import { Entity } from "./entities/Base.js";
 
 
 export class GameCommon implements IGameCommon {
     Modules: GameModule[] = [];
-
     Drawables: IDrawable[] = [];
     Updatables: IUpdatable[] = [];
 

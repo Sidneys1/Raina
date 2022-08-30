@@ -60,7 +60,7 @@ export class Renderer {
         this.Ctx.globalAlpha = restore;
     }
 
-    static FillRect(color: string, x: number, y: number, w: number, h: number, opacity = 1) {
+    static FillRect(color: string | CanvasGradient | CanvasPattern, x: number, y: number, w: number, h: number, opacity = 1) {
         const restore = this.Ctx.globalAlpha;
         this.Ctx.globalAlpha = opacity;
         this.Ctx.fillStyle = color;

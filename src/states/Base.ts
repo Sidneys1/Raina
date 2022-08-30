@@ -5,17 +5,27 @@ import { GameCommon } from "../GameCommon.js";
 
 export abstract class GameState extends GameCommon implements IGameCommon, IUpdatable, IDrawable {
     public abstract Name: string;
-    public Entities: Entity[] = [];
     DrawPriority: number = 0;
     Enabled: boolean = true;
     Priority: number = 0;
     Layer: number = 0;
 
-    constructor() { super(); }
-    DisabledUpdate(elapsedTime: number): void {
-        throw new Error("Method not implemented.");
+    public Entities: Entity[] = [];
+
+    public RemoveEntity(entity: Entity): void {
+        this.Drawables = this.Drawables.filter(e => e !== entity);
+        this.Updatables = this.Updatables.filter(e => e !== entity);
+        this.Entities = this.Entities.filter(e => e !== entity);
     }
 
+    public AddEntity(entity: Entity): void {
+        this.Entities.push(entity);
+        this.Updatables.push(entity);
+        this.Drawables.push(entity);
+    }
+
+    constructor() { super(); }
+    DisabledUpdate(elapsedTime: number): void { }
 
     public Update(elapsedTime: number) {
         for (const updatable of this.Updatables)

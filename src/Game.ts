@@ -24,9 +24,9 @@ export class SiMooLatorGame extends GameCommon implements IGame {
 
     // This keeps the game running.
     private GameLoop() {
-        var lastFrame = Date.now();
+        var lastFrame = window.performance.now(); //Date.now();
         const innerGameLoop = () => {
-            const currentFrame = Date.now();
+            const currentFrame = window.performance.now(); //Date.now();
             const elapsedTime = (currentFrame - lastFrame) / 1000; // convert ms to s
             lastFrame = currentFrame;
             
@@ -67,7 +67,7 @@ export class SiMooLatorGame extends GameCommon implements IGame {
     }
 
     private Draw(elapsedTime: number) {
-        Renderer.Clear("white");
+        Renderer.Clear("skyblue");
         
         for (const drawable of this.Drawables) {
             if (drawable.Enabled)
